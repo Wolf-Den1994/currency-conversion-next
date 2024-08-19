@@ -18,6 +18,11 @@ export const Amount = () => {
         placeholder='Write amount'
         value={amount}
         onChange={handleChange}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            convertRates().catch(console.error);
+          }
+        }}
         className='p-2/2 block h-8 w-24 rounded-lg border border-white bg-gray-400 p-2 text-sm text-white placeholder-white focus:border-white focus:ring-white sm:w-44'
       />
       <button

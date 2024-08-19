@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Currency conversion
 
-## Getting Started
+## [Deploy](https://currency-conversion-next.vercel.app/)
 
-First, run the development server:
+> Developed a cryptocurrency converter application using Next.js
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Prerequisites
+
+- Git - [Download & Install Git](https://git-scm.com/downloads).
+- Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+
+## Downloading
+
+```
+git clone https://github.com/Wolf-Den1994/currency-conversion-next
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Go to project root directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+cd currency-conversion-next
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installing NPM modules
 
-## Learn More
+```
+npm ci
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Running application
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+After starting the app, you can open it
 
-## Deploy on Vercel
+### Linter and formater
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+npm run lint
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+npm run lint:fix
+```
+
+```
+npm run format
+```
+
+---
+
+## Used technologies:
+
+- TypeScript 5
+- Next 14
+- React 18
+- Zustand
+- TailwindCSS
+- eslint & prettier
+- node.js version: 20 LTS
+
+---
+
+## Authors:
+
+_[Denis Karazan](https://github.com/Wolf-Den1994)_
