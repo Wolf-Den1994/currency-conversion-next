@@ -3,43 +3,78 @@ import { getSymbols, convertRates } from '@/services';
 
 type UseRates = {
   symbols: string[];
-  isLoading: boolean;
-  error: string;
-  selectedCurrency: string;
+  isLoadingSymbol: boolean;
+  errorSymbol: string;
+  selectedCurrencyFrom: string;
+  selectedCurrencyTo: string;
   amount: string;
+  convertedResult: string;
+  isLoadingConvert: boolean;
+  errorConvert: string;
   getSymbols: () => Promise<void>;
-  selectCurrency: (currency: string) => void;
+  selectCurrency: (currency: string, isFrom: boolean) => void;
   changeAmount: (amount: string) => void;
+  convertRates: () => Promise<void>;
 };
 
 export const useRates = createWithEqualityFn<UseRates>((set) => ({
   symbols: [],
-  isLoading: false,
-  error: '',
-  selectedCurrency: '',
+  isLoadingSymbol: false,
+  errorSymbol: '',
+  selectedCurrencyFrom: '',
+  selectedCurrencyTo: '',
   amount: '',
+  convertedResult: '',
+  isLoadingConvert: true,
+  errorConvert: '',
   getSymbols: async () => {
     try {
-      set({ isLoading: true, error: '' });
-      const data = await getSymbols();
-      if (data.success) {
+      set({ isLoadingSymbol: true, errorSymbol: '' });
+      const symbols = await getSymbols();
+      if (Object.keys(symbols).length) {
         set({
-          isLoading: false,
-          symbols: [...new Set(Object.keys(data.symbols))],
+          isLoadingSymbol: false,
+          symbols: [...new Set(Object.keys(symbols))],
         });
       } else {
-        set({ isLoading: false, error: data.error.info });
+        set({ isLoadingSymbol: false, errorSymbol: 'Oops, not found :(' });
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
-        set({ isLoading: false, error: error.message });
+        set({ isLoadingSymbol: false, errorSymbol: error.message });
       }
     }
   },
-  selectCurrency: (currency: string) => {
-    set({ selectedCurrency: currency });
+  selectCurrency: (currency, isFrom) => {
+    if (isFrom) {
+      set({ selectedCurrencyFrom: currency });
+    } else {
+      set({ selectedCurrencyTo: currency });
+    }
   },
-  changeAmount: (amount: string) => {
+  changeAmount: (amount) => {
     set({ amount });
+  },
+  convertRates: async () => {
+    try {
+      set({ isLoadingConvert: true, errorConvert: '' });
+      const { selectedCurrencyFrom, selectedCurrencyTo, amount } =
+        useRates.getState();
+      const { rates, message } = await convertRates(
+        selectedCurrencyFrom,
+        selectedCurrencyTo,
+        parseFloat(amount)
+      );
+      set({
+        isLoadingConvert: false,
+        convertedResult: message
+          ? `Oops, error: ${message}`
+          : `${amount} ${selectedCurrencyFrom} = ${rates[selectedCurrencyTo]} ${selectedCurrencyTo}`,
+      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        set({ isLoadingConvert: false, errorConvert: error.message });
+      }
+    }
   },
 }));

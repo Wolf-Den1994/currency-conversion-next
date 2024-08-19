@@ -4,7 +4,7 @@ import { type ChangeEvent, useCallback } from 'react';
 import { useRates } from '@/store';
 
 export const Amount = () => {
-  const { amount, changeAmount } = useRates();
+  const { amount, changeAmount, convertRates } = useRates();
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => changeAmount(e.target.value),
@@ -22,7 +22,7 @@ export const Amount = () => {
       />
       <button
         className='mb-1 h-8 w-full cursor-pointer rounded-md border text-center text-sm'
-        onClick={() => console.log(1)}
+        onClick={convertRates}
       >
         Convert
       </button>
