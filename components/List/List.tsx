@@ -18,25 +18,28 @@ export const List = () => {
         <Loader />
       ) : (
         <div>
-          <div className='flex flex-row gap-7'>
-            <div className='flex flex-col items-center justify-center gap-4'>
-              <div>From</div>
-              <div className='flex max-h-60 min-h-60 min-w-28 flex-col items-center justify-between overflow-y-scroll px-6 py-1'>
-                {symbols.map((symbol) => (
-                  <Item key={symbol} symbol={symbol} isFrom />
-                ))}
+          {errorSymbol ? (
+            <p>Oops, error: ${errorSymbol}</p>
+          ) : (
+            <div className='flex flex-row gap-7'>
+              <div className='flex flex-col items-center justify-center gap-4'>
+                <div>From</div>
+                <div className='flex max-h-60 min-h-60 min-w-28 flex-col items-center justify-between overflow-y-scroll px-6 py-1'>
+                  {symbols.map((symbol) => (
+                    <Item key={symbol} symbol={symbol} isFrom />
+                  ))}
+                </div>
+              </div>
+              <div className='flex flex-col items-center justify-center gap-4'>
+                <div>To</div>
+                <div className='flex max-h-60 min-h-60 min-w-28 flex-col items-center justify-between overflow-y-scroll px-6 py-1'>
+                  {symbols.map((symbol) => (
+                    <Item key={symbol} symbol={symbol} />
+                  ))}
+                </div>
               </div>
             </div>
-            <div className='flex flex-col items-center justify-center gap-4'>
-              <div>To</div>
-              <div className='flex max-h-60 min-h-60 min-w-28 flex-col items-center justify-between overflow-y-scroll px-6 py-1'>
-                {symbols.map((symbol) => (
-                  <Item key={symbol} symbol={symbol} />
-                ))}
-              </div>
-            </div>
-          </div>
-          {errorSymbol && <p>Oops, error: ${errorSymbol}</p>}
+          )}
         </div>
       )}
     </>

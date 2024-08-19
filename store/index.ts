@@ -30,11 +30,12 @@ export const useRates = createWithEqualityFn<UseRates>((set) => ({
   getSymbols: async () => {
     try {
       set({ isLoadingSymbol: true, errorSymbol: '' });
-      const symbols = await getSymbols();
-      if (Object.keys(symbols).length) {
+      const result = await getSymbols();
+      const symbols = result.map((symbol) => symbol.toUpperCase());
+      if (symbols.length) {
         set({
           isLoadingSymbol: false,
-          symbols: [...new Set(Object.keys(symbols))],
+          symbols: [...new Set(symbols)],
         });
       } else {
         set({ isLoadingSymbol: false, errorSymbol: 'Oops, not found :(' });
@@ -60,16 +61,15 @@ export const useRates = createWithEqualityFn<UseRates>((set) => ({
       set({ isLoadingConvert: true, errorConvert: '' });
       const { selectedCurrencyFrom, selectedCurrencyTo, amount } =
         useRates.getState();
-      const { rates, message } = await convertRates(
+      const result = await convertRates(
         selectedCurrencyFrom,
-        selectedCurrencyTo,
-        parseFloat(amount)
+        selectedCurrencyTo
       );
       set({
         isLoadingConvert: false,
-        convertedResult: message
-          ? `Oops, error: ${message}`
-          : `${amount} ${selectedCurrencyFrom} = ${rates[selectedCurrencyTo]} ${selectedCurrencyTo}`,
+        convertedResult: result.Message
+          ? `Oops, error: ${result.Message}`
+          : `${amount} ${selectedCurrencyFrom} = ${(+amount * result[selectedCurrencyTo]).toFixed(2)} ${selectedCurrencyTo}`,
       });
     } catch (error: unknown) {
       if (error instanceof Error) {

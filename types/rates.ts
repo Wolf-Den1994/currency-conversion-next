@@ -1,13 +1,3 @@
-export type ConvertRateResponse = {
-  amount: number;
-  base: string;
-  date: string;
-  rates: {
-    [key: string]: number;
-  };
-  message: string;
-};
+export type ConvertRateResponse = Record<string, number>;
 
-export type SymbolsRateResponse = {
-  [key: string]: string;
-};
+export type SymbolsRateResponse = string[];

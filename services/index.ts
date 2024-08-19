@@ -1,1 +1,1 @@
-export * from './frankfurterApi';
+export * from './cryptoApi';
