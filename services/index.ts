@@ -1,1 +1,1 @@
-export * from './exchangeRatesApi'
+export * from './exchangeRatesApi';
