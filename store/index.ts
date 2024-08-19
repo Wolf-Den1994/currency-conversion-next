@@ -5,13 +5,16 @@ type UseRates = {
   symbols: string[];
   isLoading: boolean;
   error: string;
+  selectedCurrency: string;
   getSymbols: () => Promise<void>;
+  selectCurrency: (currency: string) => void;
 };
 
 export const useRates = createWithEqualityFn<UseRates>((set) => ({
   symbols: [],
   isLoading: false,
   error: '',
+  selectedCurrency: '',
   getSymbols: async () => {
     try {
       set({ isLoading: true, error: '' });
@@ -26,5 +29,8 @@ export const useRates = createWithEqualityFn<UseRates>((set) => ({
         set({ isLoading: false, error: error.message });
       }
     }
+  },
+  selectCurrency: (currency: string) => {
+    set({ selectedCurrency: currency });
   },
 }));

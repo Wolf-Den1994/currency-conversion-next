@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { Item } from '@/components/Item';
 import { Loader } from '@/components/Loader';
 import { useRates } from '@/store';
 
@@ -17,14 +18,9 @@ export const List = () => {
         <Loader />
       ) : (
         <div>
-          <div className='flex flex-col items-center justify-between p-6'>
+          <div className='flex max-h-60 flex-col items-center justify-between overflow-y-scroll px-6 py-1'>
             {symbols.map((symbol) => (
-              <div
-                key={symbol}
-                className='mb-1 w-20 cursor-pointer border text-center'
-              >
-                {symbol}
-              </div>
+              <Item key={symbol} symbol={symbol} />
             ))}
           </div>
           {error && <p>Oops, error: ${error}</p>}
