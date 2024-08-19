@@ -12,7 +12,7 @@ export const Item = ({ symbol }: ItemProps) => {
   return (
     <button
       key={symbol}
-      className={`mb-1 w-20 cursor-pointer border text-center ${selectedCurrency === symbol ? 'border-blue-500' : ''}`}
+      className={`mb-1 w-20 cursor-pointer rounded-md border text-center ${selectedCurrency === symbol ? 'border-blue-500' : ''}`}
       onClick={() => selectCurrency(symbol)}
     >
       {symbol}

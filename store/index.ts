@@ -6,8 +6,10 @@ type UseRates = {
   isLoading: boolean;
   error: string;
   selectedCurrency: string;
+  amount: string;
   getSymbols: () => Promise<void>;
   selectCurrency: (currency: string) => void;
+  changeAmount: (amount: string) => void;
 };
 
 export const useRates = createWithEqualityFn<UseRates>((set) => ({
@@ -15,12 +17,16 @@ export const useRates = createWithEqualityFn<UseRates>((set) => ({
   isLoading: false,
   error: '',
   selectedCurrency: '',
+  amount: '',
   getSymbols: async () => {
     try {
       set({ isLoading: true, error: '' });
       const data = await getSymbols();
       if (data.success) {
-        set({ isLoading: false, symbols: Object.keys(data.symbols) });
+        set({
+          isLoading: false,
+          symbols: [...new Set(Object.keys(data.symbols))],
+        });
       } else {
         set({ isLoading: false, error: data.error.info });
       }
@@ -32,5 +38,8 @@ export const useRates = createWithEqualityFn<UseRates>((set) => ({
   },
   selectCurrency: (currency: string) => {
     set({ selectedCurrency: currency });
+  },
+  changeAmount: (amount: string) => {
+    set({ amount });
   },
 }));
